@@ -1,3 +1,3 @@
 # Tournament-Tracker
-C# Project - tournament tracker
+C# Project - Tournament Tracker
 
