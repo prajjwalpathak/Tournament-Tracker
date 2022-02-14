@@ -5,12 +5,7 @@
       "ProjectGuid": "9ea62cb8-2489-49e7-803f-da9536150f71",
       "DisplayName": "TrackerLibrary",
       "ColorIndex": 0
-    },
-    "e50939f1-ba47-43f6-a1d7-18d98ae6b0b1": {
-      "ProjectGuid": "e50939f1-ba47-43f6-a1d7-18d98ae6b0b1",
-      "DisplayName": "TrackerUI",
-      "ColorIndex": 1
     }
   },
-  "NextColorIndex": 2
+  "NextColorIndex": 1
 }
