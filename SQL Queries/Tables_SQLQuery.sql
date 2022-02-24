@@ -1,7 +1,7 @@
-Create Database TournamentTracker
+Create Database Tournaments
 Go
 
-Use TournamentTracker;
+Use Tournaments;
 
 Create table dbo.Tournaments (
 	id int Identity(1,1) NOT NULL,
