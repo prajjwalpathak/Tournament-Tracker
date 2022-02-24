@@ -1,8 +1,17 @@
 {
   "version": 2,
-  "dgSpecHash": "VAHfqX5YxSKJmZhIlC6WdHjwxxII7dDMuq7CJNej6R20xKBPbdCxaPmzg1DnwK0g6Q2sFRG7DT0ao1ZVrQ5DFg==",
+  "dgSpecHash": "z0cT7oAZTRAi7jIiGZYRlKtINK2gXNnk2RFhHkXMp5WgMTm7qfuMvBzB9d7zigk1ukngYcef2x+1Z4XgHmimSA==",
   "success": true,
   "projectFilePath": "D:\\Programs\\Visual Studio Projects\\TournamentTracker\\TournamentTracker\\TrackerLibrary\\TrackerLibrary.csproj",
-  "expectedPackageFiles": [],
+  "expectedPackageFiles": [
+    "C:\\Users\\PRAJJWAL\\.nuget\\packages\\dapper\\2.0.123\\dapper.2.0.123.nupkg.sha512",
+    "C:\\Users\\PRAJJWAL\\.nuget\\packages\\microsoft.win32.systemevents\\6.0.0\\microsoft.win32.systemevents.6.0.0.nupkg.sha512",
+    "C:\\Users\\PRAJJWAL\\.nuget\\packages\\system.configuration.configurationmanager\\6.0.0\\system.configuration.configurationmanager.6.0.0.nupkg.sha512",
+    "C:\\Users\\PRAJJWAL\\.nuget\\packages\\system.drawing.common\\6.0.0\\system.drawing.common.6.0.0.nupkg.sha512",
+    "C:\\Users\\PRAJJWAL\\.nuget\\packages\\system.security.accesscontrol\\6.0.0\\system.security.accesscontrol.6.0.0.nupkg.sha512",
+    "C:\\Users\\PRAJJWAL\\.nuget\\packages\\system.security.cryptography.protecteddata\\6.0.0\\system.security.cryptography.protecteddata.6.0.0.nupkg.sha512",
+    "C:\\Users\\PRAJJWAL\\.nuget\\packages\\system.security.permissions\\6.0.0\\system.security.permissions.6.0.0.nupkg.sha512",
+    "C:\\Users\\PRAJJWAL\\.nuget\\packages\\system.windows.extensions\\6.0.0\\system.windows.extensions.6.0.0.nupkg.sha512"
+  ],
   "logs": []
 }
