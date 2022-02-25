@@ -16,10 +16,10 @@ Create table dbo.Prizes (
 	id int Identity(1,1) NOT NULL,
 	PlaceNumber int NOT NULL,
 	PlaceName nvarchar(50) NOT NULL,
-	PrizeAmt money NOT NULL
-		Constraint DF_Prizes_PrizeAmt Default 0,
-	PrizePercent float
-		Constraint DF_Prizes_PrizePercent Default 0,
+	PrizeAmount money NOT NULL
+		Constraint DF_Prizes_PrizeAmount Default 0,
+	PrizePercentage float
+		Constraint DF_Prizes_PrizePercentage Default 0,
 
 	Constraint PK_Prizes Primary Key Clustered (id asc),
 );

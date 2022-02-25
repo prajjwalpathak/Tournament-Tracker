@@ -133,7 +133,7 @@ namespace TrackerUI
             double prizePercentage = 0;
             bool prizeAmountValid = decimal.TryParse(prizeAmountValue.Text, out PrizeAmount);
             bool prizePercentageValid = double.TryParse(prizePercentageValue.Text, out prizePercentage);
-            if (prizeAmountValid == false || prizePercentageValid == false)
+            if (prizeAmountValid == false && prizePercentageValid == false)
             {
                 output = false;
             }
