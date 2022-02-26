@@ -55,12 +55,8 @@ Create Table dbo.People (
 	id int Identity(1,1) NOT NULL,
 	FirstName nvarchar(100) NOT NULL,
 	LastName nvarchar(100) NOT NULL,
-	Email nvarchar(200) NOT NULL,
+	EmailAddress nvarchar(200) NOT NULL,
 	PhoneNumber varchar(20),
-	NumOfKids int NOT NULL
-		Constraint DF_People_NumOfKids Default (0),
-	CreateDate datetime2(7)
-		Constraint DF_People_CreateDate Default GetDate(),
 
 	Constraint PK_People Primary Key Clustered (id asc)
 );

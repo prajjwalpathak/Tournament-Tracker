@@ -19,15 +19,15 @@ Go
 Create Procedure dbo.spPeople_Insert
 	@FirstName nvarchar(100),
 	@LastName nvarchar(100),
-	@Email nvarchar(200),
+	@EmailAddress nvarchar(200),
 	@PhoneNumber varchar(20),
 	@id int = 0 output
 As
 Begin
 	Set NoCount On;
 
-	Insert into dbo.People (FirstName, LastName, Email, PhoneNumber)
-	Values (@FirstName, @LastName, @Email, @PhoneNumber);
+	Insert into dbo.People (FirstName, LastName, EmailAddress, PhoneNumber)
+	Values (@FirstName, @LastName, @EmailAddress, @PhoneNumber);
 
 	Select @id = SCOPE_IDENTITY();
 End
