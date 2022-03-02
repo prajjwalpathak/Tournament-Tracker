@@ -1,218 +1,229 @@
-Create Procedure dbo.spPrizes_Insert
-	@PlaceNumber int, 
-	@PlaceName nvarchar(50),
-	@PrizeAmount money,
-	@PrizePercentage float,
-	@id int = 0 output
-As
-Begin
-	Set NoCount On;
+CREATE PROCEDURE dbo.spPrizes_Insert
+	@PlaceNumber INT, 
+	@PlaceName NVARCHAR(50), 
+	@PrizeAmount MONEY, 
+	@PrizePercentage float, 
+	@id INT = 0 OUTPUT
+AS
+BEGIN
+	SET NOCOUNT ON;
 	
-	Insert into dbo.Prizes (PlaceNumber, PlaceName, PrizeAmount, PrizePercentage)
-	Values (@PlaceNumber, @PlaceName, @PrizeAmount, @PrizePercentage);
+	INSERT INTO dbo.Prizes (PlaceNumber, PlaceName, PrizeAmount, PrizePercentage)
+	VALUES (@PlaceNumber, @PlaceName, @PrizeAmount, @PrizePercentage);
 
-	Select @id = SCOPE_IDENTITY();
-End
-
-Go
-
-Create Procedure dbo.spPeople_Insert
-	@FirstName nvarchar(100),
-	@LastName nvarchar(100),
-	@EmailAddress nvarchar(200),
-	@PhoneNumber varchar(20),
-	@id int = 0 output
-As
-Begin
-	Set NoCount On;
-
-	Insert into dbo.People (FirstName, LastName, EmailAddress, PhoneNumber)
-	Values (@FirstName, @LastName, @EmailAddress, @PhoneNumber);
-
-	Select @id = SCOPE_IDENTITY();
-End
-
-Go
-
-Create Procedure dbo.spTeams_GetAll
-As
-
-Begin
-	Set NoCount On;
-
-	select * from dbo.Teams;
-End
-
-Go
-
-Create Procedure dbo.spTeams_Insert
-	@TeamName nvarchar(100),
-	@id int = 0 output
-As
-Begin
-	Set NoCount On;
-
-	Insert Into dbo.Teams (TeamName)
-	Values (@TeamName);
-
-	Select @id = SCOPE_IDENTITY();
-End
-
-Go
-
-Create Procedure dbo.spTeamMembers_Insert
-	@TeamId int, 
-	@PersonId int,
-	@id int = 0 output
-As
-Begin
-	Set NoCount On;
-
-	Insert Into dbo.TeamMembers (TeamId, PersonId)
-	Values (@TeamId, @PersonId);
-
-	Select @id = SCOPE_IDENTITY();
-
-End
-
-Go
-
-Create Procedure dbo.spMatchupEntries_GetByMatchup
-	@MatchupId int
-As
-Begin
-	Set NoCount On;
-
-	Select me.*
-	From dbo.MatchupEntries me
-	Where me.MatchupId = @MatchupId;
-
-End
-
-Go
-
-Create Procedure dbo.spMatchups_GetByTournament
-	@TournamentId int
-As
-Begin
-	Set NoCount On;
-
-	Select m.*
-	From dbo.Matchups m
-	Join dbo.MatchupEntries me On m.id = me.MatchupId
-	Join dbo.Teams tm On tm.id = me.TeamCompetingId
-	Join dbo.TournamentEntries te On tm.id = te.TeamId
-	Where te.TournamentId = @TournamentId;
-End
-
-Go
-
-Create Procedure dbo.spPeople_GetAll
-As
-
-Begin
-	Set NoCount On;
-
-	Select p.*
-	From dbo.People p;
-End
-
-Go
-
-Create Procedure dbo.spPrizes_GetByTournament
-	@TournamentId int
-As
-Begin
-	Set NoCount On;
-
-	Select p.*
-	From Prizes p
-	Join dbo.TournamentPrizes tp On p.id = tp.PrizeId
-	Where tp.TournamentId = @TournamentId;
-End
-
-Go
-
-Create Procedure dbo.spTeam_GetByTournament
-	@TournamentId int
-As
-Begin
-	Set NoCount On;
-
-	Select t.*
-	From dbo.Teams t
-	Join dbo.TournamentEntries te On t.id = te.TeamId
-	Where te.TournamentId = @TournamentId;
-End
-
-Go
-
-Create Procedure dbo.spTournament_Insert
-	@TournamentName nvarchar (200),
-	@EntryFee money,
-	@Id int =0 output
-As
-Begin
-
-	Set NoCount On;
-
-	Insert into dbo.Tournaments (TournamentName, Entryfee, Active)
-	Values (@TournamentName, @EntryFee,1);
-	Select @id = SCOPE_IDENTITY();
-End
-
+	SELECT @id = SCOPE_IDENTITY();
+END
 GO
 
-Create Procedure dbo.spTeamMembers_GetByTeam
-	@TeamId int
-As
-Begin
-	Set NoCount On;
+CREATE PROCEDURE dbo.spPeople_Insert
+	@FirstName NVARCHAR(100), 
+	@LastName NVARCHAR(100), 
+	@EmailAddress NVARCHAR(200), 
+	@PhoneNumber VARCHAR(20), 
+	@id INT = 0 OUTPUT
+AS
+BEGIN
+	SET NOCOUNT ON;
 
-	Select tm.*
-	From dbo.TeamMembers tm
-	Join dbo.Teams t On t.id = tm.TeamId
-	Where tm.TeamId = @TeamId;
-End
+	INSERT INTO dbo.People (FirstName, LastName, EmailAddress, PhoneNumber)
+	VALUES (@FirstName, @LastName, @EmailAddress, @PhoneNumber);
 
-Go
+	SELECT @id = SCOPE_IDENTITY();
+END
+GO
 
-Create Procedure dbo.spTournamentEntries_Insert
-	@TournamentId int,
-	@TeamId int, 
-	@id int = 0 output
-As
-Begin
-	Set NoCount On;
-	 insert into dbo.TournamentEntries (TournamentId, TeamId)
-	 values (@TournamentId, @TeamId)
-	 select @id= SCOPE_IDENTITY();
-End
+CREATE PROCEDURE dbo.spTeams_GetAll
+AS
+BEGIN
+	SET NOCOUNT ON;
 
-Go
+	SELECT * FROM dbo.Teams;
+END
+GO
 
-Create Procedure dbo.spTournamentPrizes_Insert
-	@TournamentId int,
-	@PrizeId int,
-	@Id int=0 output
-As
-Begin
-	Set NoCount On;
+CREATE PROCEDURE dbo.spTeams_Insert
+	@TeamName NVARCHAR(100), 
+	@id INT = 0 OUTPUT
+AS
+BEGIN
+	SET NOCOUNT ON;
 
-	Insert into dbo.TournamentPrizes (TournamentId, PrizeId)
-	values (@TournamentId, @PrizeId);
-	select @id = SCOPE_IDENTITY();
-End
+	INSERT INTO dbo.Teams (TeamName)
+	VALUES (@TeamName);
 
-Go
+	SELECT @id = SCOPE_IDENTITY();
+END
+GO
 
-Create Procedure dbo.spTournaments_GetAll
-As
-Begin
-	Set NoCount On;
+CREATE PROCEDURE dbo.spTeamMembers_Insert
+	@TeamId INT, 
+	@PersonId INT, 
+	@id INT = 0 OUTPUT
+AS
+BEGIN
+	SET NOCOUNT ON;
 
-	Select t.*
-	From dbo.Tournaments t
-End
+	INSERT INTO dbo.TeamMembers (TeamId, PersonId)
+	VALUES (@TeamId, @PersonId);
 
-Go
+	SELECT @id = SCOPE_IDENTITY();
+END
+GO
+
+CREATE PROCEDURE dbo.spMatchupEntries_GetByMatchup
+	@MatchupId INT
+AS
+BEGIN
+	SET NOCOUNT ON;
+
+	SELECT me.*
+	FROM dbo.MatchupEntries me
+	WHERE me.MatchupId = @MatchupId;
+END
+GO
+
+CREATE PROCEDURE dbo.spMatchups_GetByTournament
+	@TournamentId INT
+AS
+BEGIN
+	SET NOCOUNT ON;
+
+	SELECT m.*
+	FROM dbo.Matchups m
+	Join dbo.MatchupEntries me ON m.id = me.MatchupId
+	Join dbo.Teams tm ON tm.id = me.TeamCompetingId
+	Join dbo.TournamentEntries te ON tm.id = te.TeamId
+	WHERE te.TournamentId = @TournamentId;
+END
+GO
+
+CREATE PROCEDURE dbo.spMatchups_Insert
+	@TournamentId INT, 
+	@MatchupRound INT, 
+	@Id INT = 0 OUTPUT
+
+AS
+BEGIN
+	SET NOCOUNT ON;
+
+	INSERT INTO dbo.Matchups (TournamentId, MatchupRound)
+	VALUES (@TournamentId, @MatchupRound)
+	SELECT @Id= SCOPE_IDENTITY();
+END
+GO
+
+CREATE PROCEDURE dbo.spMatchupEntries_Insert
+	@MatchupId INT, 
+	@ParentMatchupId INT, 
+	@TeamCompetingId INT, 
+	@id INT=0 OUTPUT
+AS
+BEGIN
+	SET NOCOUNT ON;
+
+	INSERT INTO dbo.MatchupEntries (MatchupId, ParentMatchupId, TeamCompetingId)
+	VALUES (@MatchupId, @ParentMatchupId, @TeamCompetingId)
+
+	SELECT @id= SCOPE_IDENTITY();
+END
+GO
+
+CREATE PROCEDURE dbo.spPeople_GetAll
+AS
+BEGIN
+	SET NOCOUNT ON;
+
+	SELECT p.*
+	FROM dbo.People p;
+END
+GO
+
+CREATE PROCEDURE dbo.spPrizes_GetByTournament
+	@TournamentId INT
+AS
+BEGIN
+	SET NOCOUNT ON;
+
+	SELECT p.*
+	FROM Prizes p
+	Join dbo.TournamentPrizes tp ON p.id = tp.PrizeId
+	WHERE tp.TournamentId = @TournamentId;
+END
+GO
+
+CREATE PROCEDURE dbo.spTeam_GetByTournament
+	@TournamentId INT
+AS
+BEGIN
+	SET NOCOUNT ON;
+
+	SELECT t.*
+	FROM dbo.Teams t
+	Join dbo.TournamentEntries te ON t.id = te.TeamId
+	WHERE te.TournamentId = @TournamentId;
+END
+GO
+
+CREATE PROCEDURE dbo.spTournament_Insert
+	@TournamentName NVARCHAR (200), 
+	@EntryFee MONEY, 
+	@Id INT = 0 OUTPUT
+AS
+BEGIN
+	SET NOCOUNT ON;
+
+	INSERT INTO dbo.Tournaments (TournamentName, EntryFee, Active)
+	VALUES (@TournamentName, @EntryFee, 1);
+	SELECT @id = SCOPE_IDENTITY();
+END
+GO
+
+CREATE PROCEDURE dbo.spTeamMembers_GetByTeam
+	@TeamId INT
+AS
+BEGIN
+	SET NOCOUNT ON;
+
+	SELECT tm.*
+	FROM dbo.TeamMembers tm
+	Join dbo.Teams t ON t.id = tm.TeamId
+	WHERE tm.TeamId = @TeamId;
+END
+GO
+
+CREATE PROCEDURE dbo.spTournamentEntries_Insert
+	@TournamentId INT, 
+	@TeamId INT, 
+	@id INT = 0 OUTPUT
+AS
+BEGIN
+	SET NOCOUNT ON;
+	 INSERT INTO dbo.TournamentEntries (TournamentId, TeamId)
+	 VALUES (@TournamentId, @TeamId)
+	 SELECT @id= SCOPE_IDENTITY();
+END
+GO
+
+CREATE PROCEDURE dbo.spTournamentPrizes_Insert
+	@TournamentId INT, 
+	@PrizeId INT, 
+	@Id INT=0 OUTPUT
+AS
+BEGIN
+	SET NOCOUNT ON;
+
+	INSERT INTO dbo.TournamentPrizes (TournamentId, PrizeId)
+	VALUES (@TournamentId, @PrizeId);
+	SELECT @id = SCOPE_IDENTITY();
+END
+GO
+
+CREATE PROCEDURE dbo.spTournaments_GetAll
+AS
+BEGIN
+	SET NOCOUNT ON;
+
+	SELECT t.*
+	FROM dbo.Tournaments t
+END
+GO

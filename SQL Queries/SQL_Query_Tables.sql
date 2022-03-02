@@ -1,94 +1,96 @@
-Create Database Tournaments
-Go
+CREATE DATABASE Tournaments
+GO
 
-Use Tournaments;
+USE Tournaments;
 
-Create table dbo.Tournaments (
-	id int Identity(1,1) NOT NULL,
-	TournamentName nvarchar(200) NOT NULL,
-	EntryFee money NOT NULL,
-		Constraint DF_Tournaments_EntryFee Default 0,
-	Active bit NOT NULL
+CREATE TABLE dbo.Tournaments (
+	id INT IDENTITY(1, 1) NOT NULL, 
+	TournamentName NVARCHAR(200) NOT NULL, 
+	EntryFee MONEY NOT NULL
+		CONSTRAINT DF_Tournaments_EntryFee DEFAULT 0, 
+	Active BIT NOT NULL
 
-	Constraint PK_Tournaments Primary Key Clustered (id asc),
+	CONSTRAINT PK_Tournaments PRIMARY KEY CLUSTERED (id ASC), 
 );
 
-Create table dbo.Prizes (
-	id int Identity(1,1) NOT NULL,
-	PlaceNumber int NOT NULL,
-	PlaceName nvarchar(50) NOT NULL,
-	PrizeAmount money NOT NULL
-		Constraint DF_Prizes_PrizeAmount Default 0,
+CREATE TABLE dbo.Prizes (
+	id INT IDENTITY(1, 1) NOT NULL, 
+	PlaceNumber INT NOT NULL, 
+	PlaceName NVARCHAR(50) NOT NULL, 
+	PrizeAmount MONEY NOT NULL
+		CONSTRAINT DF_Prizes_PrizeAmount DEFAULT 0, 
 	PrizePercentage float
-		Constraint DF_Prizes_PrizePercentage Default 0,
+		CONSTRAINT DF_Prizes_PrizePercentage DEFAULT 0, 
 
-	Constraint PK_Prizes Primary Key Clustered (id asc),
+	CONSTRAINT PK_Prizes PRIMARY KEY CLUSTERED (id ASC), 
 );
 
-Create table dbo.TournamentPrizes (
-	id int Identity(1,1) NOT NULL,
-	TournamentId int,
-	PrizeId int,
+CREATE TABLE dbo.TournamentPrizes (
+	id INT IDENTITY(1, 1) NOT NULL, 
+	TournamentId INT, 
+	PrizeId INT, 
 
-	Constraint PK_TournamentPrizes Primary Key Clustered (id asc),
-	Constraint FK_TP_Prizes Foreign Key (PrizeId) References Prizes(id),
-	Constraint FK_TP_Tournaments Foreign Key (TournamentId) References Tournaments(id)
+	CONSTRAINT PK_TournamentPrizes PRIMARY KEY CLUSTERED (id ASC), 
+	CONSTRAINT FK_TP_Prizes FOREIGN KEY (PrizeId) REFERENCES Prizes(id), 
+	CONSTRAINT FK_TP_Tournaments FOREIGN KEY (TournamentId) REFERENCES Tournaments(id)
 );
 
-Create table dbo.Teams (
-	id int Identity(1,1) NOT NULL,
-	TeamName nvarchar(150) NOT NULL,
+CREATE TABLE dbo.Teams (
+	id INT IDENTITY(1, 1) NOT NULL, 
+	TeamName NVARCHAR(150) NOT NULL, 
 
-	Constraint PK_Teams Primary Key Clustered (id asc)
+	CONSTRAINT PK_Teams PRIMARY KEY CLUSTERED (id ASC)
 );
 
-Create table dbo.TournamentEntries (
-	id int Identity(1,1) NOT NULL,
-	TournamentId int,
-	TeamId int,
+CREATE TABLE dbo.TournamentEntries (
+	id INT IDENTITY(1, 1) NOT NULL, 
+	TournamentId INT, 
+	TeamId INT, 
 
-	Constraint PK_TournamentEntries Primary Key Clustered (id asc),
-	Constraint FK_TE_Teams Foreign Key (TeamId) References Teams(id),
-	Constraint FK_TE_Tournaments Foreign Key (TournamentId) References Tournaments(id)
+	CONSTRAINT PK_TournamentEntries PRIMARY KEY CLUSTERED (id ASC), 
+	CONSTRAINT FK_TE_Teams FOREIGN KEY (TeamId) REFERENCES Teams(id), 
+	CONSTRAINT FK_TE_Tournaments FOREIGN KEY (TournamentId) REFERENCES Tournaments(id)
 );
 
-Create Table dbo.People (
-	id int Identity(1,1) NOT NULL,
-	FirstName nvarchar(100) NOT NULL,
-	LastName nvarchar(100) NOT NULL,
-	EmailAddress nvarchar(200) NOT NULL,
-	PhoneNumber varchar(20),
+CREATE TABLE dbo.People (
+	id INT IDENTITY(1, 1) NOT NULL, 
+	FirstName NVARCHAR(100) NOT NULL, 
+	LastName NVARCHAR(100) NOT NULL, 
+	EmailAddress NVARCHAR(200) NOT NULL, 
+	PhoneNumber VARCHAR(20), 
 
-	Constraint PK_People Primary Key Clustered (id asc)
+	CONSTRAINT PK_People PRIMARY KEY CLUSTERED (id ASC)
 );
 
-Create table dbo.TeamMembers (
-	id int Identity(1,1) NOT NULL,
-	TeamId int,
-	PersonId int,
+CREATE TABLE dbo.TeamMembers (
+	id INT IDENTITY(1, 1) NOT NULL, 
+	TeamId INT, 
+	PersonId INT, 
 
-	Constraint PK_TeamMembers Primary Key Clustered (id asc),
-	Constraint FK_TeamMembers_People Foreign Key (PersonId) References People(id),
-	Constraint FK_TeamMembers_Team Foreign Key (TeamId) References Teams(id)
+	CONSTRAINT PK_TeamMembers PRIMARY KEY CLUSTERED (id ASC), 
+	CONSTRAINT FK_TeamMembers_People FOREIGN KEY (PersonId) REFERENCES People(id), 
+	CONSTRAINT FK_TeamMembers_Team FOREIGN KEY (TeamId) REFERENCES Teams(id)
 );
 
-Create table dbo.Matchups (
-	id int Identity(1,1) NOT NULL,
-	WinnerId int,
-	MatchupRound int NOT NULL
+CREATE TABLE dbo.Matchups (
+	id INT IDENTITY(1, 1) NOT NULL, 
+	TournamentId INT NOT NULL, 
+	WinnerId INT, 
+	MatchupRound INT NOT NULL
 
-	Constraint PK_Matchups Primary Key Clustered (id asc),
-	Constraint FK_Matchups_WinningTeam Foreign Key (WinnerId) References Teams(id)
+	CONSTRAINT PK_Matchups PRIMARY KEY CLUSTERED (id ASC), 
+	CONSTRAINT FK_Matchups_WinningTeam FOREIGN KEY (WinnerId) REFERENCES Teams(id)
 );
 
-Create table dbo.MatchupEntries (
-	id int Identity(1,1) NOT NULL,
-	MatchupId int,
-	TeamCompetingId int,
-	Score int NOT NULL
-		Constraint DF_ME_Score Default (0),
+CREATE TABLE dbo.MatchupEntries (
+	id INT IDENTITY(1, 1) NOT NULL, 
+	MatchupId INT, 
+	ParentMatchupId INT NULL, 
+	TeamCompetingId INT, 
+	Score INT NOT NULL
+		CONSTRAINT DF_ME_Score DEFAULT (0), 
 
-	Constraint PK_MatchupEntries Primary Key Clustered (id asc),
-	Constraint FK_ME_Matchup Foreign Key (MatchupId) References Matchups(id),
-	Constraint FK_ME_TeamCompeting Foreign Key (TeamCompetingId) References Teams(id),
+	CONSTRAINT PK_MatchupEntries PRIMARY KEY CLUSTERED (id ASC), 
+	CONSTRAINT FK_ME_Matchup FOREIGN KEY (MatchupId) REFERENCES Matchups(id), 
+	CONSTRAINT FK_ME_TeamCompeting FOREIGN KEY (TeamCompetingId) REFERENCES Teams(id), 
 );
