@@ -172,7 +172,7 @@ namespace TrackerLibrary.DataAccess.TextHelpers
 
             foreach (string line in lines)
             {
-                string[] cols = line.Split(',');//genera un array que esta separado por comas
+                string[] cols = line.Split(',');
                 MatchupModel m = new MatchupModel();
                 m.Id = int.Parse(cols[0]);
                 m.Entries = ConvertStringToMachupEntryModel(cols[1]);
@@ -202,7 +202,7 @@ namespace TrackerLibrary.DataAccess.TextHelpers
             List<TournamentModel> output = new List<TournamentModel>();
             List<TeamModel> teams = TeamFile.FullFilePath().LoadFile().ConvertToTeamModels(peopleFileName);
             List<PrizeModel> prizes = prizeFileName.FullFilePath().LoadFile().ConvertToPrizesModels();
-            //TODO - AQUI ES DONDE LA CAGA
+           
             List<MatchupModel> matchups = GlobalConfig
                 .MatchupFile
                 .FullFilePath()
@@ -382,13 +382,11 @@ namespace TrackerLibrary.DataAccess.TextHelpers
 
             if (matchups.Count > 0)
             {
-                currentId = matchups.OrderByDescending(x => x.Id).First().Id + 1; //lo ordena por orden inverso de IDs y le añade 1
+                currentId = matchups.OrderByDescending(x => x.Id).First().Id + 1; 
             }
             matchup.Id = currentId;
 
             matchups.Add(matchup);
-
-            //save to file
 
             List<string> lines = new List<string>();
 

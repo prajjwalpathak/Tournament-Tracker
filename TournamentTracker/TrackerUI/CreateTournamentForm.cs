@@ -83,7 +83,6 @@ namespace TrackerUI
                 return;
             }
 
-            // Create our tournament model.
             TournamentModel tm = new TournamentModel();
 
             if (tournamentNameValue.Text.Length > 0)
@@ -112,11 +111,6 @@ namespace TrackerUI
 
             TournamentLogic.CreateRounds(tm);
             GlobalConfig.Connection.CreateTournament(tm);
-
-            //TournamentViewerForm form = new TournamentViewerForm(tm);
-            //form.Show();
-            //this.Close();
-
         }
 
         private void removeSelectedPrizeButton_Click(object sender, EventArgs e)
@@ -146,19 +140,14 @@ namespace TrackerUI
 
         private void createPrizeButton_Click(object sender, EventArgs e)
         {
-            //call the createprizeform
             CreatePrizeForm form = new CreatePrizeForm(this);
             form.Show();
         }
 
         public void PrizeComplete(PrizeModel model)
         {
-
-            //get back from the form a prizemodel
-            //take the prizemodel and put it into our list of selected prizes
             selectedPrizes.Add(model);
             WireUpLists();
-
         }
 
         public void TeamComplete(TeamModel model)
