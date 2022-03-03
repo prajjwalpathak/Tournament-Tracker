@@ -104,5 +104,10 @@ namespace TrackerLibrary.DataAccess
             Tournaments.Add(model);
             Tournaments.SaveToTournamentFile(TournamentFile);
         }
+
+        public List<TournamentModel> GetTournament_All()
+        {
+            throw new NotImplementedException();
+        }
     }
 }
