@@ -107,7 +107,29 @@ namespace TrackerLibrary.DataAccess
 
         public List<TournamentModel> GetTournament_All()
         {
-            throw new NotImplementedException();
+            return GlobalConfig.TournamentFile
+                .FullFilePath()
+                .LoadFile()
+                .ConvertToTournamentModels(TeamFile, PeopleFile, PrizesFile);
+        }
+
+        public void UpdateMatchup(MatchupModel model)
+        {
+            model.UpdateMatchupToFile();
+        }
+
+        public void CompleteTournament(TournamentModel model)
+        {
+            List<TournamentModel> tournaments = GlobalConfig.TournamentFile
+                .FullFilePath()
+                .LoadFile()
+                .ConvertToTournamentModels(TeamFile, PeopleFile, PrizesFile);
+
+            tournaments.Remove(model);
+
+            tournaments.SaveToTournamentFile(TournamentFile);
+
+            TournamentLogic.UpdateTournamentResults(model);
         }
     }
 }
