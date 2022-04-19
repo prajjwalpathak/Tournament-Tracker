@@ -9,6 +9,7 @@ namespace TrackerLibrary.Models
 {
     public class TournamentModel
     {
+        public event EventHandler<DateTime> OnTournamentComplete;
         public int Id { get; set; }
         public string TournamentName { get; set; }
         public decimal EntryFee { get; set; }

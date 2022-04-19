@@ -24,11 +24,18 @@ namespace TrackerUI
 
             tournament = tournamentModel;
 
+            tournament.OnTournamentComplete += Tournament_OnTournamentComplete;
+
             WireUpLists();
 
             LoadFormData();
 
             LoadRounds();
+        }
+
+        private void Tournament_OnTournamentComplete(object? sender, DateTime e)
+        {
+            this.Close();
         }
 
         private void LoadFormData()
@@ -257,72 +264,6 @@ namespace TrackerUI
         private void teamOneName_Click(object sender, EventArgs e)
         {
 
-        }
-
-        private void scoreButton_Click_1(object sender, EventArgs e)
-        {
-            string errorMessage = ValidateData();
-
-            if (errorMessage.Length > 0)
-            {
-                MessageBox.Show($"Input Error: { errorMessage }");
-                return;
-            }
-
-            MatchupModel m = (MatchupModel)matchupListBox.SelectedItem;
-            double teamOneScore = 0;
-            double teamTwoScore = 0;
-
-            for (int i = 0; i < m.Entries.Count; i++)
-            {
-                if (i == 0)
-                {
-                    if (m.Entries[0].TeamCompeting != null)
-                    {
-                        bool scoreValid = double.TryParse(teamOneScoreValue.Text, out teamOneScore);
-
-                        if (scoreValid)
-                        {
-                            m.Entries[0].Score = teamOneScore;
-                        }
-                        else
-                        {
-                            MessageBox.Show("Please enter a valid score for team 1.");
-                            return;
-                        }
-                    }
-                }
-
-                if (i == 1)
-                {
-                    if (m.Entries[1].TeamCompeting != null)
-                    {
-                        bool scoreValid = double.TryParse(teamTwoScoreValue.Text, out teamTwoScore);
-
-                        if (scoreValid)
-                        {
-                            m.Entries[1].Score = teamTwoScore;
-                        }
-                        else
-                        {
-                            MessageBox.Show("Please enter a valid score for team 2.");
-                            return;
-                        }
-                    }
-                }
-            }
-
-            try
-            {
-                TournamentLogic.UpdateTournamentResults(tournament);
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show($"The application had the following error: { ex.Message }");
-                return;
-            }
-
-            LoadMatchups((int)roundDropDown.SelectedItem);
         }
     }
 }

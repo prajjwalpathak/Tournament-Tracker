@@ -11,8 +11,8 @@ namespace TrackerLibrary
     public static class TournamentLogic
     {
         //Order our list randomly of teams
-        //Check if it is big enoug - if not, ad in byes 2*2*2*2   2^4
-        //Create oour first round of matchups
+        //Check if it is big enough - if not, ad in byes 2*2*2*2   2^4
+        //Create our first round of matchups
         //Create every round after that 8 matchups - 4 matchups - 2 matchups - 1 matchups
 
         public static void CreateRounds(TournamentModel model)
@@ -52,6 +52,7 @@ namespace TrackerLibrary
                 round += 1;
             }
         }
+
         private static List<MatchupModel> CreateFirstRound(int byes, List<TeamModel> teams)
         {
             List<MatchupModel> output = new List<MatchupModel>();
@@ -74,6 +75,7 @@ namespace TrackerLibrary
             }
             return output;
         }
+
         private static int NumberOfByes(int rounds, int numberOfTeams)
         {
             int output = 0;
@@ -88,6 +90,7 @@ namespace TrackerLibrary
 
             return output;
         }
+
         private static int FindNumberOfRounds(int teamCount)
         {
             int output = 1;
@@ -99,6 +102,7 @@ namespace TrackerLibrary
             }
             return output;
         }
+
         private static List<TeamModel> RandomizeTeamOrder(List<TeamModel> teams)
         {
             return teams.OrderBy(x => Guid.NewGuid()).ToList();
@@ -364,7 +368,5 @@ namespace TrackerLibrary
                 }
             }
         }
-
-
     }
 }
